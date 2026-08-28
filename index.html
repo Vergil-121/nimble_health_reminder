@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>健康日签</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%230e9f8e' d='M12 3.5S6.5 8.8 6.5 13a5.5 5.5 0 0 0 11 0c0-4.2-5.5-9.5-5.5-9.5Z'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <svg class="icon-sprite" aria-hidden="true">
+    <symbol id="icon-water" viewBox="0 0 24 24">
+      <path d="M12 3.5s5.5 5.3 5.5 9.5a5.5 5.5 0 0 1-11 0C6.5 8.8 12 3.5 12 3.5Z"/>
+      <path d="M9.5 14.2a2.6 2.6 0 0 0 2.3 2.5"/>
+    </symbol>
+    <symbol id="icon-sleep" viewBox="0 0 24 24">
+      <path d="M20.5 14.5A8.5 8.5 0 0 1 9.5 3.5 8.5 8.5 0 1 0 20.5 14.5Z"/>
+      <path d="M17 3.2l.8 1.9 1.9.8-1.9.8-.8 1.9-.8-1.9-1.9-.8 1.9-.8.8-1.9Z"/>
+    </symbol>
+    <symbol id="icon-sun" viewBox="0 0 24 24">
+      <circle cx="12" cy="12" r="4"/>
+      <path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>
+    </symbol>
+    <symbol id="icon-move" viewBox="0 0 24 24">
+      <path d="M6.5 6.5v11M6.5 12h4.5a2 2 0 0 0 0-4H6.5M11 12l5 5.5M13.5 9.5 17 6"/>
+    </symbol>
+    <symbol id="icon-sit" viewBox="0 0 24 24">
+      <path d="M6 18h12M7 18V9a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v9M9 7V4.5M12 7V3.5M15 7V4.5"/>
+    </symbol>
+    <symbol id="icon-bell" viewBox="0 0 24 24">
+      <path d="M6 9a6 6 0 0 1 12 0c0 4 1.5 5.5 2 6H4c.5-.5 2-2 2-6Z"/>
+      <path d="M10 19a2 2 0 0 0 4 0"/>
+    </symbol>
+    <symbol id="icon-clock" viewBox="0 0 24 24">
+      <circle cx="12" cy="12" r="8.5"/>
+      <path d="M12 7v5l3.2 2"/>
+    </symbol>
+    <symbol id="icon-plus" viewBox="0 0 24 24">
+      <path d="M12 5v14M5 12h14"/>
+    </symbol>
+    <symbol id="icon-minus" viewBox="0 0 24 24">
+      <path d="M5 12h14"/>
+    </symbol>
+    <symbol id="icon-check" viewBox="0 0 24 24">
+      <path d="M5 12.5 9.5 17 19 7"/>
+    </symbol>
+    <symbol id="icon-trash" viewBox="0 0 24 24">
+      <path d="M5 7h14M9 7V4.5h6V7M8 7l.8 12h6.4L16 7M10 11v5M14 11v5"/>
+    </symbol>
+    <symbol id="icon-reset" viewBox="0 0 24 24">
+      <path d="M4.5 9a8 8 0 1 1-.8 6"/>
+      <path d="M4.5 3.5V9H10"/>
+    </symbol>
+  </svg>
+
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true">
+          <svg><use href="#icon-water"></use></svg>
+        </span>
+        <div>
+          <h1>健康日签</h1>
+          <p id="todayLabel"></p>
+        </div>
+      </div>
+      <div class="top-actions">
+        <span id="notificationState" class="status-pill">通知未开启</span>
+        <button id="bellButton" class="icon-btn" type="button" aria-label="开启通知">
+          <svg><use href="#icon-bell"></use></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="page">
+    <section class="overview" aria-labelledby="overviewTitle">
+      <div class="section-head">
+        <h2 id="overviewTitle">今日概览</h2>
+      </div>
+      <div class="overview-grid" id="overviewGrid"></div>
+    </section>
+
+    <div class="main-grid">
+      <section class="panel" aria-labelledby="timelineTitle">
+        <div class="section-head">
+          <h2 id="timelineTitle">今日提醒</h2>
+          <span class="section-meta" id="timelineMeta"></span>
+        </div>
+        <ol class="timeline-list" id="timelineList"></ol>
+      </section>
+
+      <aside class="side">
+        <section class="panel" aria-labelledby="checkinTitle">
+          <div class="section-head">
+            <h2 id="checkinTitle">快速打卡</h2>
+          </div>
+          <div class="checkin-grid" id="checkinGrid"></div>
+        </section>
+
+        <section class="panel" aria-labelledby="weekTitle">
+          <div class="section-head">
+            <h2 id="weekTitle">近 7 天</h2>
+          </div>
+          <div class="week-chart" id="weekChart"></div>
+        </section>
+      </aside>
+    </div>
+
+    <section class="panel" aria-labelledby="settingsTitle">
+      <div class="section-head">
+        <h2 id="settingsTitle">设置</h2>
+        <button id="resetButton" class="ghost-btn" type="button">
+          <svg><use href="#icon-reset"></use></svg>
+          恢复默认
+        </button>
+      </div>
+      <div class="settings-grid" id="settingsGrid"></div>
+    </section>
+  </main>
+
+  <div id="bannerStack" class="banner-stack" aria-live="polite"></div>
+
+  <dialog id="sleepDialog" class="sleep-dialog">
+    <form id="sleepForm">
+      <div class="dialog-head">
+        <h2>记录睡眠</h2>
+        <button type="button" id="sleepClose" class="icon-btn" aria-label="关闭">
+          <svg><use href="#icon-minus"></use></svg>
+        </button>
+      </div>
+      <label class="field">
+        <span>入睡</span>
+        <input type="time" id="sleepBed" required>
+      </label>
+      <label class="field">
+        <span>起床</span>
+        <input type="time" id="sleepWake" required>
+      </label>
+      <p class="sleep-preview" id="sleepPreview"></p>
+      <div class="dialog-actions">
+        <button type="button" id="sleepCancel" class="ghost-btn">取消</button>
+        <button type="submit" class="primary-btn">保存</button>
+      </div>
+    </form>
+  </dialog>
+
+  <script src="app.js"></script>
+</body>
+</html>
